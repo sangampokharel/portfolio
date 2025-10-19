@@ -246,6 +246,34 @@
   });
 
   /**
+   * Portfolio sliders initialization
+   */
+  window.addEventListener('load', () => {
+    const portfolioSliders = select('.portfolioSwiper', true);
+    
+    portfolioSliders.forEach((slider) => {
+      new Swiper(slider, {
+        speed: 600,
+        loop: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true
+        },
+        pagination: {
+          el: slider.querySelector('.swiper-pagination'),
+          type: 'bullets',
+          clickable: true
+        },
+        effect: 'fade',
+        fadeEffect: {
+          crossFade: true
+        }
+      });
+    });
+  });
+
+  /**
    * Initiate Pure Counter 
    */
   new PureCounter();
