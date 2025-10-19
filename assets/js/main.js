@@ -55,9 +55,9 @@
   })
 
   /**
-   * Scrool with ofset on links with a class name .scrollto
+   * Scroll with offset on links with a class name .scrollto
    */
-  on('click', '#navbar .nav-link', function(e) {
+  on('click', '#navbar .nav-link, #header h1 a', function(e) {
     let section = select(this.hash)
     if (section) {
       e.preventDefault()
@@ -70,7 +70,10 @@
         item.classList.remove('active')
       })
 
-      this.classList.add('active')
+      // Don't add active class to name link, let scroll handler manage it
+      if (this.classList.contains('nav-link')) {
+        this.classList.add('active')
+      }
 
       if (navbar.classList.contains('navbar-mobile')) {
         navbar.classList.remove('navbar-mobile')
@@ -268,7 +271,7 @@
   });
 
   /**
-   * Scroll Progress Indicator
+   * Scroll Progress Indicator and Navigation Highlighting
    */
   window.addEventListener('scroll', () => {
     const scrollProgress = select('.scroll-progress')
@@ -277,6 +280,32 @@
       const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
       const scrollPercent = (scrollTop / scrollHeight) * 100
       scrollProgress.style.width = scrollPercent + '%'
+    }
+
+    // Navigation highlighting based on scroll position
+    const sections = select('section', true)
+    const navLinks = select('#navbar .nav-link', true)
+    const scrollPos = window.pageYOffset + 100
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop
+      const sectionHeight = section.offsetHeight
+      const sectionId = section.getAttribute('id')
+
+      if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+        navLinks.forEach(link => {
+          link.classList.remove('active')
+          if (link.getAttribute('href') === `#${sectionId}`) {
+            link.classList.add('active')
+          }
+        })
+      }
+    })
+
+    // Handle About section (when name is clicked)
+    const aboutSection = select('#about')
+    if (aboutSection && scrollPos < aboutSection.offsetTop + 200) {
+      navLinks.forEach(link => link.classList.remove('active'))
     }
   })
 
