@@ -378,6 +378,7 @@ section {
   opacity: 1;
   transition: ease-in-out 0.4s;
   z-index: 2;
+  margin-bottom: 20px;
 }
 
 section.section-show {
@@ -385,8 +386,11 @@ section.section-show {
 }
 
 section .container {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.7);
   padding: 30px;
+  border-radius: 10px;
+  margin: 20px auto;
+  backdrop-filter: blur(10px);
 }
 
 @media (max-width: 768px) {
@@ -1286,6 +1290,29 @@ section .container {
   background: linear-gradient(90deg, #18d26e, #35e888);
   z-index: 9999;
   transition: width 0.1s ease;
+}
+
+/*--------------------------------------------------------------
+# Section Content Styling
+--------------------------------------------------------------*/
+section .section-title h2 {
+  color: #18d26e;
+  margin-bottom: 20px;
+}
+
+section .section-title p {
+  color: #fff;
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+section h3, section h4, section h5 {
+  color: #fff;
+}
+
+section p {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
 }
 
 /*--------------------------------------------------------------
