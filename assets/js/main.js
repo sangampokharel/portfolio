@@ -64,7 +64,6 @@
 
       let navbar = select('#navbar')
       let header = select('#header')
-      let sections = select('section', true)
       let navlinks = select('#navbar .nav-link', true)
 
       navlinks.forEach((item) => {
@@ -80,47 +79,40 @@
         navbarToggle.classList.toggle('bi-x')
       }
 
-      if (this.hash == '#header') {
-        header.classList.remove('header-top')
-        sections.forEach((item) => {
-          item.classList.remove('section-show')
-        })
-        return;
-      }
-
+      // Always show header as fixed
       if (!header.classList.contains('header-top')) {
         header.classList.add('header-top')
-        setTimeout(function() {
-          sections.forEach((item) => {
-            item.classList.remove('section-show')
-          })
-          section.classList.add('section-show')
-
-        }, 350);
-      } else {
-        sections.forEach((item) => {
-          item.classList.remove('section-show')
-        })
-        section.classList.add('section-show')
       }
 
-      scrollto(this.hash)
+      // Smooth scroll to section
+      section.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
     }
   }, true)
 
   /**
-   * Activate/show sections on load with hash links
+   * Initialize page on load
    */
   window.addEventListener('load', () => {
+    let header = select('#header')
+    let sections = select('section', true)
+    
+    // Always show header as fixed
+    header.classList.add('header-top')
+    
+    // Show all sections
+    sections.forEach((section) => {
+      section.classList.add('section-show')
+    })
+    
+    // Handle hash links
     if (window.location.hash) {
       let initial_nav = select(window.location.hash)
-
       if (initial_nav) {
-        let header = select('#header')
         let navlinks = select('#navbar .nav-link', true)
-
-        header.classList.add('header-top')
-
+        
         navlinks.forEach((item) => {
           if (item.getAttribute('href') == window.location.hash) {
             item.classList.add('active')
@@ -128,12 +120,14 @@
             item.classList.remove('active')
           }
         })
-
-        setTimeout(function() {
-          initial_nav.classList.add('section-show')
-        }, 350);
-
-        scrollto(window.location.hash)
+        
+        // Smooth scroll to section
+        setTimeout(() => {
+          initial_nav.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          })
+        }, 100)
       }
     }
   });
@@ -272,6 +266,19 @@
       });
     });
   });
+
+  /**
+   * Scroll Progress Indicator
+   */
+  window.addEventListener('scroll', () => {
+    const scrollProgress = select('.scroll-progress')
+    if (scrollProgress) {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+      const scrollPercent = (scrollTop / scrollHeight) * 100
+      scrollProgress.style.width = scrollPercent + '%'
+    }
+  })
 
   /**
    * Initiate Pure Counter 
