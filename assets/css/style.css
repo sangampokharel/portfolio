@@ -378,7 +378,7 @@ section {
   opacity: 1;
   transition: ease-in-out 0.4s;
   z-index: 2;
-  margin-bottom: 20px;
+  background: rgba(0, 0, 0, 0.6);
 }
 
 section.section-show {
@@ -386,11 +386,12 @@ section.section-show {
 }
 
 section .container {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.3);
   padding: 30px;
   border-radius: 10px;
   margin: 20px auto;
   backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @media (max-width: 768px) {
