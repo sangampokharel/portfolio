@@ -12,6 +12,15 @@
 /*--------------------------------------------------------------
 # Smooth Scrolling
 --------------------------------------------------------------*/
+/*--------------------------------------------------------------
+# CSS Reset
+--------------------------------------------------------------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -23,6 +32,8 @@ body {
   position: relative;
   background: transparent;
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 body::before {
@@ -166,6 +177,9 @@ h6 {
   right: 0;
   background: rgba(0, 0, 0, 0.9);
   z-index: 1000;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
 }
 
 #header.header-top .social-links,
@@ -186,6 +200,10 @@ h6 {
 #header.header-top .container {
   display: flex;
   align-items: center;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 20px;
+  width: 100%;
 }
 
 #header.header-top .navbar {
