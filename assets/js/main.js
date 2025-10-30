@@ -140,16 +140,37 @@
    */
   let skilsContent = select('.skills-content');
   if (skilsContent) {
+    const animateSkills = () => {
+      let progress = select('.progress .progress-bar', true);
+      progress.forEach((el) => {
+        el.style.width = el.getAttribute('aria-valuenow') + '%'
+      });
+    }
+
     new Waypoint({
       element: skilsContent,
       offset: '80%',
       handler: function(direction) {
-        let progress = select('.progress .progress-bar', true);
-        progress.forEach((el) => {
-          el.style.width = el.getAttribute('aria-valuenow') + '%'
-        });
+        animateSkills();
       }
     })
+
+    // Also animate on initial load if already in view (e.g., via hash or
+    // when the section is near the top without scrolling yet)
+    const checkInViewAndAnimate = () => {
+      const rect = skilsContent.getBoundingClientRect();
+      const threshold = window.innerHeight * 0.8;
+      if (rect.top <= threshold) {
+        animateSkills();
+        window.removeEventListener('load', checkInViewAndAnimate);
+        document.removeEventListener('scroll', checkInViewAndAnimate);
+        window.removeEventListener('resize', checkInViewAndAnimate);
+      }
+    }
+
+    window.addEventListener('load', checkInViewAndAnimate);
+    document.addEventListener('scroll', checkInViewAndAnimate, { passive: true });
+    window.addEventListener('resize', checkInViewAndAnimate);
   }
 
   /**
